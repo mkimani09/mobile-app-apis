@@ -2,7 +2,6 @@ package com.faidihr.mobile.app.api.service.impl;
 
 
 import com.faidihr.mobile.app.api.context.TenantContext;
-import com.faidihr.mobile.app.api.model.Client;
 import com.faidihr.mobile.app.api.model.User;
 import com.faidihr.mobile.app.api.model.repository.ClientRepository;
 import com.faidihr.mobile.app.api.model.repository.UserRepository;
@@ -40,18 +39,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ResponseEntity<Object> getAccessToken(AuthenticationRequest authenticationRequest) {
-
-        Client client = clientsRepository.findClientsByAdminEmailAndActiveStatus(authenticationRequest.getEmail(),UserStatus.ACTIVE.getStatus());
-
-        if (Objects.isNull(client)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(GenericResponse.GenericResponseData.builder()
-                            .status(HttpStatus.NOT_FOUND.value())
-                            .message("User not found")
-                            .msgDeveloper("User not found" + authenticationRequest.getEmail())
-                            //.data()
-                            .build());
-        }
 
         User user = userRepository.findUserByEmailAndStatus(authenticationRequest.getEmail(), UserStatus.ACTIVE.getStatus());
 
