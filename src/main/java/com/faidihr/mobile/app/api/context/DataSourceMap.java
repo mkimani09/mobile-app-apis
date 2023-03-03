@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -14,7 +15,10 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -24,6 +28,9 @@ import java.util.*;
 public class DataSourceMap {
     @Autowired
     RestTemplateService restTemplateService;
+
+    @Autowired
+    Environment environment;
 
 
     public Map<Object, Object> LoadDataSourcesHashMap() throws Exception {
@@ -48,7 +55,7 @@ public class DataSourceMap {
 //        Object objClients = clientsServiceImp.getClients();
 //        System.out.println("objClients >> "+objClients);
 //System.exit(0);
-        ResponseEntity<String> obj = restTemplate.exchange("http://localhost:8082/auth/api/clients", HttpMethod.GET, request, String.class);
+        ResponseEntity<String> obj = restTemplate.exchange(environment.getProperty("app.faidihr.routing.engine.base.url")+"/api/clients", HttpMethod.GET, request, String.class);
         List<Object> list = Collections.singletonList(obj.getBody());
 
 

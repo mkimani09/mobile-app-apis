@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/auth")
 public class AuthController {
     @Autowired
@@ -22,7 +21,7 @@ public class AuthController {
     @Autowired
     private Validator validator;
 
-    @GetMapping(path = "/token")
+    @PostMapping(path = "/token")
     public ResponseEntity<Object> getAccessToken(HttpServletRequest request, @RequestBody AuthenticationRequest authenticationRequest, Errors errors) throws Exception {
         validator.validate(authenticationRequest, errors);
         if (errors.hasErrors()) {

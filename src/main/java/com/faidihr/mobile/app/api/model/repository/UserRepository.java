@@ -11,4 +11,6 @@ public interface UserRepository extends CrudRepository<User,Long> {
 
    public User findUserByEmailAndStatus(String email,  Integer status);
 
+   public User findUserByEmail(String email);
+
 }
